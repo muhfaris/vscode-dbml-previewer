@@ -72,6 +72,11 @@ You can also use DBML Previewer as a command-line tool to serve a preview of a D
 
 ### Usage
 
+**Note:** Before running the CLI directly for the first time, you need to build the project to generate the necessary web assets:
+```bash
+npm run build
+```
+
 To start a web server that previews your DBML file, run the following command from the root of the project:
 
 ```bash
@@ -80,9 +85,9 @@ node bin/cli.js -i path/to/your/file.dbml
 
 This will start a server at `http://localhost:1234`.
 
-You can also use the npm script:
+You can also use the npm script, which handles the build step automatically. Note the `--` which is needed to pass arguments to the script:
 ```bash
-npm run serve -- path/to/your/file.dbml
+npm run serve -- -i path/to/your/file.dbml
 ```
 
 **Options:**
