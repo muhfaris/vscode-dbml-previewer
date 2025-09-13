@@ -2,12 +2,17 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import DBMLPreview from './components/DBMLPreview';
 
-try {
-  // Get VS Code API once at module level to avoid multiple acquisitions
-  const vscode = acquireVsCodeApi();
+const isVSCode = typeof acquireVsCodeApi === 'function';
 
-  // Make vscode API available globally
-  window.vscode = vscode;
+try {
+  let vscode;
+  if (isVSCode) {
+    // Get VS Code API once at module level to avoid multiple acquisitions
+    vscode = acquireVsCodeApi();
+
+    // Make vscode API available globally
+    window.vscode = vscode;
+  }
 
   const container = document.getElementById('root');
 
@@ -30,10 +35,12 @@ try {
 
       root.render(<App />);
       
-      // Send ready message to VS Code
-      setTimeout(() => {
-        vscode.postMessage({ type: 'ready' });
-      }, 100);
+      if (isVSCode) {
+        // Send ready message to VS Code
+        setTimeout(() => {
+          vscode.postMessage({ type: 'ready' });
+        }, 100);
+      }
       
     } catch (error) {
       console.error('Error creating React root or rendering:', error);

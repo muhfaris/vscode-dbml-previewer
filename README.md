@@ -48,11 +48,13 @@ Perfect for database architects, developers, and anyone working with database sc
 
 ### 📦 **Quick Install**
 ```bash
-# Install from command line
+# Install from command line (for VS Code Extension)
 code --install-extension rizkykurniawan.dbml-previewer
 ```
 
 **Or** search "DBML Previewer" in VS Code Extensions (`Ctrl+Shift+X`)
+
+For local development, see the [Development & Contributing](#-development--contributing) section.
 
 ### ⚡ **Instant Usage**
 1. 📁 **Open** any `.dbml` file in VS Code
@@ -63,6 +65,29 @@ code --install-extension rizkykurniawan.dbml-previewer
 - Right-click file → "Preview DBML"
 - Click preview button in editor title bar
 - Command Palette → "DBML Previewer: Preview DBML"
+
+## 🖥️ Command-Line Interface (CLI)
+
+You can also use DBML Previewer as a command-line tool to serve a preview of a DBML file directly from your project.
+
+### Usage
+
+To start a web server that previews your DBML file, run the following command from the root of the project:
+
+```bash
+node bin/cli.js -i path/to/your/file.dbml
+```
+
+This will start a server at `http://localhost:1234`.
+
+You can also use the npm script:
+```bash
+npm run serve -- path/to/your/file.dbml
+```
+
+**Options:**
+
+*   `-i`, `--input`: (Required) Path to the DBML file.
 
 ### Example DBML File
 

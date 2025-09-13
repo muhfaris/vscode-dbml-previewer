@@ -47,6 +47,9 @@
   "license": "MIT",
   "icon": "icon.png",
   "main": "./extension.js",
+  "bin": {
+    "dbml-previewer": "bin/cli.js"
+  },
   "contributes": {
     "commands": [
       {
@@ -117,38 +120,41 @@
     ]
   },
   "scripts": {
-    "lint": "eslint .",
+    "lint": "node --max-old-space-size=4096 ./node_modules/eslint/bin/eslint.js .",
     "pretest": "npm run lint",
     "test": "vscode-test",
     "build": "webpack --mode production",
     "watch": "webpack --mode development --watch",
     "vscode:prepublish": "npm run build",
     "package": "vsce package --no-yarn",
-    "publish": "vsce publish --no-yarn"
+    "publish": "vsce publish --no-yarn",
+    "serve": "node bin/cli.js -i"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "@dbml/core": "^3.2.0",
     "@xyflow/react": "^12.0.0",
     "dagre": "^0.8.5",
-    "@dbml/core": "^3.2.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/vscode": "^1.102.0",
+    "@babel/core": "^7.22.0",
+    "@babel/preset-env": "^7.22.0",
+    "@babel/preset-react": "^7.22.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
-    "eslint": "^9.25.1",
+    "@types/vscode": "^1.102.0",
     "@vscode/test-cli": "^0.0.11",
     "@vscode/test-electron": "^2.5.2",
-    "webpack": "^5.88.0",
-    "webpack-cli": "^5.1.0",
-    "@babel/core": "^7.22.0",
-    "@babel/preset-env": "^7.22.0",
-    "@babel/preset-react": "^7.22.0",
     "babel-loader": "^9.1.0",
     "css-loader": "^6.8.0",
-    "style-loader": "^3.3.0"
+    "eslint": "^9.25.1",
+    "express": "^5.1.0",
+    "style-loader": "^3.3.0",
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.0",
+    "yargs": "^18.0.0"
   }
 }
