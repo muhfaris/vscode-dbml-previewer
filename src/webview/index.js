@@ -4,16 +4,24 @@ import DBMLPreview from './components/DBMLPreview';
 
 const isVSCode = typeof acquireVsCodeApi === 'function';
 
+let vscode;
+if (isVSCode) {
+  vscode = acquireVsCodeApi();
+} else {
+  // Mock the vscode API for the browser environment
+  vscode = {
+    postMessage: (message) => {
+      console.log('Message to VS Code (mocked):', message);
+    },
+    getState: () => ({}),
+    setState: () => {},
+  };
+}
+
+// Make vscode API available globally
+window.vscode = vscode;
+
 try {
-  let vscode;
-  if (isVSCode) {
-    // Get VS Code API once at module level to avoid multiple acquisitions
-    vscode = acquireVsCodeApi();
-
-    // Make vscode API available globally
-    window.vscode = vscode;
-  }
-
   const container = document.getElementById('root');
 
   if (!container) {
@@ -34,13 +42,6 @@ try {
       }
 
       root.render(<App />);
-      
-      if (isVSCode) {
-        // Send ready message to VS Code
-        setTimeout(() => {
-          vscode.postMessage({ type: 'ready' });
-        }, 100);
-      }
       
     } catch (error) {
       console.error('Error creating React root or rendering:', error);
