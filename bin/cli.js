@@ -1,5 +1,22 @@
 #!/usr/bin/env node
 
+const { execSync } = require('child_process');
+const fs = require('fs');
+const path = require('path');
+
+const webviewJsPath = path.join(__dirname, '..', 'dist', 'webview.js');
+
+if (!fs.existsSync(webviewJsPath)) {
+  console.log('Webview bundle not found. Building project...');
+  try {
+    execSync('npm run build', { stdio: 'inherit' });
+    console.log('Build complete.');
+  } catch (error) {
+    console.error('Failed to build the project. Please run "npm install" and "npm run build" manually.');
+    process.exit(1);
+  }
+}
+
 const express = require('express');
 const yargs = require('yargs/yargs');
 const { hideBin } = require('yargs/helpers');
